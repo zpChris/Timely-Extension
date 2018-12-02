@@ -1,0 +1,35 @@
+html, body {
+  font-family: "Open Sans", "Crimson Text", sans-serif;
+}
+
+body {
+  width: 300px;
+  min-height: 200px;
+  
+}
+
+hr {
+  border-top: 0.25px solid #f0f0f0;
+}
+
+#sp-header {
+  font-size: 20px;
+  font-family: sans-serif;
+  font-weight: 700;
+  text-align: center;
+}
+
+.sp-sitetrack {
+  margin: 10px 10px;
+  text-align: left;
+}
+
+#sp-weblink {
+  font-weight: 700;
+}
+
+#sp-weblink, #sp-webtimer {
+  padding: 5px 0px;
+  font-size: 14px;
+  font-family: sans-serif;
+}

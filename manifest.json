@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "Timely",
+  "description": "Timely displays your chrome web browsing statistics in a clear, readable way.",
+  "version": "1.00",
+  "icons": {
+    "128": "images/timely-logo-128.png",
+    "64": "images/timely-logo-64.png",
+    "48": "images/timely-logo-48.png",
+    "32": "images/timely-logo-32.png",
+    "16": "images/timely-logo-16.png"
+  },
+  "browser_action": {
+    "default_icon": "images/timely-logo-128.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": [
+    "tabs", "storage"
+  ]
+}
