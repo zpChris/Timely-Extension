@@ -18,11 +18,13 @@
     <div id="sp-header">Timely</div>
     <hr>
     <div class="sp-sitetrack">
-      <div id="sp-current"><span id="sp-weblink">...</span>: <span id="sp-webtimer">...</span></div>
+      <div id="sp-current">Current Website: <span id="sp-weblink">...</span>, <span id="sp-webtimer">...</span></div>
     </div>
   </div>
-  <input type="button" value="Clear Storage" id="sp-clear-storage" />
-  <canvas id="myChart" width="400" height="400"></canvas>
+  <div style="width: 80%; margin: auto;"><canvas id="myChart" width="10px" height="10px"></canvas></div>
+  <hr>
+  <div id="sp-sitetrack-storage"></div>
+  <input class="rkmd-btn btn-lightBlue" type="button" value="Clear Storage" id="sp-clear-storage" />
 </body>
 
 <script src="popup.js"></script>
