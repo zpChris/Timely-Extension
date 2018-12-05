@@ -17,6 +17,14 @@
   "background": {
     "page": "background.html"
   },
+  "content_scripts" : [
+    {
+        "all_frames" : false,
+        "run_at" : "document_end",
+        "matches" : [ "http://*/*" ],
+        "js": ["background.js", "popup.js"]
+    }
+  ],
   "permissions": [
     "tabs", "storage", "management"
   ]

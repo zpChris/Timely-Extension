@@ -1,139 +1,104 @@
-var seconds; // Integer variable to keep track of seconds
-var intervalIdCount; // The interval ID of the current setInterval() function. Cleared on new tabs
-var intervalIdDisplay;
-var intervalIdChart;
-
-/*
-
-    LISTENERS OR FUNCTIONS TO RUN APP
-
-*/
-
-update_tab_info(); // Always updating time
-
-// When window loads, update app and extension html
+// Update popup when activated
 window.onload = function () {
     update_extension_html();
+    // Clear all storage
     document.getElementById("sp-clear-storage").onclick = function () {
         chrome.storage.local.clear();
-        seconds = 0;
-        chrome.runtime.reload(); // Forced to restart extension to reset seconds
     }
 }
-
-// When tab changes, update app
-chrome.tabs.onActivated.addListener(function () {
-    // Restart timer loop with new url
-    update_tab_info();
-});
-
-// When URL on same tab changes, update app
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    // Since the onUpdated function fires multiple times, update it only on !undefined
-    var url = changeInfo.url;
-    if (url !== undefined) {
-        // Restart timer loop with new url
-        update_tab_info();
-    }
-});
-
-/*
-
-    TIMER UPDATE TO CHROME.STORAGE
-
-*/
-
-function update_tab_info() {
-    
-    chrome.tabs.query({ "active": true, "lastFocusedWindow": true }, function (tabs) {
-        var base_url = (new URL(tabs[0].url)).hostname; // stores URL hostname in base_url
-
-        base_url = base_url.split("."); // Splits components based on '.' location
-        var shortened_base_url = [base_url[base_url.length - 2], base_url[base_url.length - 1]]; // gets last two array values
-        base_url = shortened_base_url.join("."); // re-joins base_url with '.'
-
-        // Set initial value for seconds of that url
-        chrome.storage.local.get({ [base_url]: 0 }, function (result) {
-            seconds = result[base_url];
-        });
-
-        clearInterval(intervalIdCount); // Clear the previous interval before starting anew
-
-        // Set interval ID and start the counter for that site
-        intervalIdCount = setInterval(function () {
-            seconds++;
-            chrome.storage.local.set({ [base_url]: seconds });
-        }, 1000);
-
-    });
-}
-
-/* 
-
-    HTML UPDATE 
-
-*/
 
 // Update extension html
 function update_extension_html() {
 
     chrome.tabs.query({ "active": true, "lastFocusedWindow": true }, function (tabs) {
-        var base_url = (new URL(tabs[0].url)).hostname; // stores URL hostname in base_url
 
-        base_url = base_url.split("."); // Splits components based on '.' location
-        var shortened_base_url = [base_url[base_url.length - 2], base_url[base_url.length - 1]]; // gets last two array values
-        base_url = shortened_base_url.join("."); // re-joins base_url with '.'
+        // GET BASE URL
+
+        var base_url = (new URL(tabs[0].url)).hostname; // stores URL hostname in base_url
+        // Remove early components only if the domain is 'normal'
+        if (base_url.includes(".")) {
+            base_url = base_url.split("."); // Splits components based on '.' location
+            var shortened_base_url = [base_url[base_url.length - 2], base_url[base_url.length - 1]]; // gets last two array values
+            base_url = shortened_base_url.join("."); // re-joins base_url with '.'
+        }
 
         pie_chart();
 
-
-        /* All keys/values */
+        // Get all statistics from all sites (don't need older days, but need to collect all objects)
         chrome.storage.local.get(null, function(items) {
-            var site_stats = sort_object_by_value(items);
-            var allKeys = Object.keys(site_stats);
-            var allValues = Object.values(site_stats);
-            for (i = 0; i < allKeys.length; i++) {
-                var h = Math.floor(allValues[i]/3600);
-                var m = Math.floor((allValues[i]%3600)/60);
-                var s = Math.floor(allValues[i]%60);
-                document.getElementById("sp-sitetrack-storage").innerHTML += "<span id='mydot'></span><b>" + allKeys[i] + ":</b> " + h + "h, " + m + "m, " + s + "s" + "<hr>";
+
+            var sitenum = Object.keys(items).length; // The number of sites currently in database
+
+            for (var i = 0; i < sitenum; i++) {
+                var site = Object.keys(items)[i];
+                
+                var sitetrack = document.getElementById("sp-sitetrack-storage");
+                sitetrack.innerHTML += "<div class='sitetrack-element'><div class='site-header'>" + site + "</div>";
+
+
+
+                var sitedata = items[site];
+                var sitedatalength = Object.keys(sitedata).length;
+
+                // Enumerate the times for all sites, given aggregate and each date tracked
+                for (var j = 0; j < sitedatalength; j++) {
+                    var key = Object.keys(sitedata)[j];
+                    var value = secondstodhms(Object.values(sitedata)[j]);
+                    var dhms = "";
+                    dhms += value[0] + "d, ";
+                    dhms += value[1] + "h, ";
+                    dhms += value[2] + "m, ";
+                    dhms += value[3] + "s";
+                    
+                    // Add to popup with following class structure in place
+                    sitetrack.innerHTML += "<div class='sitetrack-datapoint'><span class='key'>" + key + ": " +
+                            "</span><span class='value'>" + dhms + "</span></div>";
+                }
+
             }
+
+
         });
-
-        // Display url
-        document.getElementById("sp-weblink").innerHTML = base_url;
-        // Fetch the seconds from chrome.storage, it will constantly update
-
-        clearInterval(intervalIdDisplay); // Clear the previous interval before starting anew
-
-        intervalIdDisplay = setInterval(function () {
-
-            chrome.storage.local.get({ [base_url]: 0 }, function (result) {
-                document.getElementById("sp-webtimer").innerHTML = result[base_url] + "s";
-            });
-
-        }, 1000);
 
     });
 
 }
 
-/*
+// Convert seconds to 'dhms', more readable form
+function secondstodhms(seconds) {
+    var d = Math.floor(seconds/86400);
+    var h = Math.floor(seconds/3600);
+    var m = Math.floor((seconds%3600)/60);
+    var s = Math.floor(seconds%60);
+    return [d, h, m, s];
+}
 
-    DATA VISUALIZATION
-
-*/
+// DATA VISUALIZATION
 
 // Display pie chart
 function pie_chart() {
 
     // Print out all keys/values in storage
     chrome.storage.local.get(null, function (items) {
+        var now = new Date(); // Represents the current date
+        console.log(items);
         // Sort objects by value to allow correct input into pie chart
-        var site_stats_whole = sort_object_by_value(items); // all sites enumerated
+        var sitenum = Object.keys(items).length; // The number of sites currently in database
+
+        var all_sites_today = {}; // Holds seconds for all sites for today
+        for (var i = 0; i < sitenum; i++) {
+            var site = Object.keys(items)[i]; // Run through data for each site
+            var sitedata = items[site];
+            all_sites_today[site] = sitedata[now.toDateString()];
+        }
+        
+        var site_stats_whole = sort_object_by_value(all_sites_today); // Sort the data by time
+
+        // CONSOLIDATE REMAINDER AND PLACE INTO OTHER, CONVERT TO PERCENTAGES
+
         var remainder = 0; // remainder for the 'other' category
-        var site_stats = {}; // put site past 5 into 'other'
-        var display_number = 5;
+        var site_stats = {}; // put sites past 10 into 'other'
+        var display_number = 10;
         for (i = 0; i < Object.keys(site_stats_whole).length; i++) {
             var key = Object.keys(site_stats_whole)[i];
             var value = Object.values(site_stats_whole)[i];
@@ -213,7 +178,7 @@ function pie_chart() {
 
 }
 
-// Sort object by value; personalized for the object function by combining remaining elements
+// Sort object by value
 function sort_object_by_value(items) {
 
     var sortable = [];
