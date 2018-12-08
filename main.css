@@ -3,9 +3,15 @@ html, body {
 }
 
 body {
-  width: 300px;
+  width: 335px;
   min-height: 200px;
   
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  border-bottom: 0.5px dashed black;
 }
 
 hr {
@@ -18,36 +24,52 @@ hr {
   text-align: center;
 }
 
-.sp-sitetrack {
-  margin: 10px 10px;
-  text-align: left;
-}
-
-#sp-weblink, #sp-webtimer {
+#sp-sitetrack-storage {
+  padding-top: 5px;
+  font-size: 14px;
   font-weight: 400;
 }
 
-#sp-current {
-  padding: 5px 0px;
+#sp-sitetrack-storage-e {
   font-size: 14px;
+  font-weight: 400;
+  padding-bottom: 5px;
+  display: none;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#chart-holder {
+  padding: 15px 0;
+}
+
+.sitetrack-element {
+  padding: 2.5px 5px;
+  font-size: 14px;
+}
+
+.sitetrack-url {
   font-weight: 700;
 }
 
-#sp-sitetrack-storage {
-  padding: 5px 0px;
-  font-size: 14px;
-  font-weight: 400;
+.sitetrack-value {
+  float: right;
 }
 
-#mydot {
-  background: gold;
+.site-dot {
+  background: 'rgba(128, 128, 128, 0.2)';
   border-radius: 50%;
   display: inline-block;
   height: 5px;
   margin-left: 4px;
   margin-right: 4px;
   width: 5px;
-}    
+}
+
 
 
 /* buttons */
@@ -55,11 +77,9 @@ hr {
 
 
 
+/* need to clean up the below */
 
-
-
-
-.rkmd-btn {
+.button {
   display: inline-block;
   position: relative;
   cursor: pointer;
@@ -68,7 +88,6 @@ hr {
   padding: 0 1.5rem;
   color: #424242;
   font-size: 15px;
-  font-weight: 600;
   font-family: sans-serif;
   text-align: center;
   text-decoration: none;
@@ -77,24 +96,42 @@ hr {
   outline: none;
   border: none;
   user-select: none;
-  border-radius: 2px;
-  transition: all .3s ease-out;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.225);
+  border-radius: 10px;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.225);
+
 
 }
 
-  .rkmd-btn:hover { text-decoration: none; box-shadow: 0 4px 10px 0px rgba(0,0,0,0.225); }
+.button:active { text-decoration: none; box-shadow: 0 2px 3px 0px rgba(30, 30, 30, 0.5); }
 
-  .captions {
-    padding: 8px;
-    color: rgba(0,0,0,0.5);
-    font-size: 13px;
-    font-weight: bold;
-    border-top: 1px solid rgba(0,0,0,0.1);
-  }
+/* set initial values for pressed on buttons */
+#stats-head, #today-graph {
+  background: rgba(54, 162, 235, 0.2);
+}
 
-  .disabled {
-    cursor: default !important;
-    color: #9e9e9e !important;
-    box-shadow: none !important;
-  }
+#expand-sitetrack-container {
+  text-align: center;
+}
+
+#expand-sp-sitetrack {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  color: #424242;
+  font-size: 14px;
+  text-decoration: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  outline: none;
+  border: none;
+  user-select: none;
+  border-radius: 50%;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.225);
+}
+
+#expand-sp-sitetrack:hover {
+  background: #eeeeee;
+}

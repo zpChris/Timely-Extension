@@ -21,19 +21,28 @@ function update_timing() {
         intervalSecondsCount = setInterval(function () {
 
             var now = new Date(); // Represents the current date
-            
-            // Only update time if popup is not activated
-            if (chrome.extension.getViews({ type: "popup" }).length == 0) {
 
-                // Get current times and continuously update those by one (every second)
-                chrome.storage.local.get({[base_url]: {'aggregate': 0, [now.toDateString()]: 0}}, function (result) {
-                    var sitedata = result[base_url];
-                    sitedata['aggregate'] = result[base_url]['aggregate'] + 1;
-                    sitedata[now.toDateString()] = result[base_url][now.toDateString()] + 1;
-                    
-                    chrome.storage.local.set({[base_url]: sitedata}); // Set new second counts in chrome.storage
-                });
-            }
+            // Only update time if popup is not activated
+            chrome.windows.getCurrent(function(browser){
+
+                // Browser.focused accounts for if Google Chrome is focused AND if extension is up (if it is, browser is not focused)
+                if (browser.focused) {
+
+                    // Get current times and continuously update those by one (every second)
+                    chrome.storage.local.get({[base_url]: {'aggregate': 0, [now.toDateString()]: 0}}, function (result) {
+                        var sitedata = result[base_url];
+                        sitedata['aggregate'] = result[base_url]['aggregate'] + 1;
+                        sitedata[now.toDateString()] = result[base_url][now.toDateString()] + 1;
+
+                        // var all_aggregate = result['all-aggregate'] + 1; // Total aggregate seconds across all sites
+                        
+                        chrome.storage.local.set({[base_url]: sitedata}); // Set new second counts in chrome.storage
+                        // chrome.storage.local.set({'all-aggregate': all_aggregate});
+                    });
+                }
+          
+            });
+            
         }, 1000);
     });
 

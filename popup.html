@@ -8,7 +8,6 @@
   <title>Timely</title>
   <link rel="stylesheet" href="main.css">
   <!-- JavaScript link to HTML doc -->
-  <script src="popup.js"></script>
   <script src="chart.min.js"></script>
   <script src="chart.js"></script>
 </head>
@@ -18,13 +17,25 @@
     <div id="sp-header">Timely</div>
     <hr>
   </div>
-  <div style="width: 80%; margin: auto;"><canvas id="myChart" width="10px" height="10px"></canvas></div>
+  <div class="tabs" id="head-tabs">
+    <input class="tab button" id="stats-head" type="button" value="Stats" />
+    <input class="tab button" id="block-head" type="button" value="Block Sites" />
+    <input class="tab button" id="settings-head" type="button" value="Settings" />
+  </div>
+  <div id="chart-holder"><canvas id="chart" width="10px" height="10px"></canvas></div>
+  <div class="tabs">
+    <input class="tab button" type="button" id="today-graph" value="Today" />
+    <input class="tab button" type="button" id="yesterday-graph" value="Yesterday" />
+    <input class="tab button" type="button" id="all-time-graph" value="All-time" />
+  </div> 
   <hr>
   <div id="sp-sitetrack-storage"></div>
-  <input class="rkmd-btn btn-lightBlue" type="button" value="Clear Storage" id="sp-clear-storage" />
+  <div id="sp-sitetrack-storage-e"></div> <!-- Second portion, expanded past 10 sites-->
+  <div id="expand-sitetrack-container"><input type="button" value="▼" id="expand-sp-sitetrack" /></div>
+  
+  <hr>
+  <input class="button btn-lightBlue" type="button" value="Clear Storage" id="sp-clear-storage" />
+  <script src="popup.js"></script> <!-- Need to load after in order for event listeners to function properly -->
 </body>
-
-<script src="chart.min.js"></script>
-<script src="chart.js"></script>
 
 </html>
