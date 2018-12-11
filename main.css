@@ -18,6 +18,18 @@ hr {
   border-top: 0.25px solid #f0f0f0;
 }
 
+#stats-page {
+  display: block;
+}
+
+#block-page {
+  display: none;
+}
+
+#settings-page {
+  display: none;
+}
+
 #sp-header {
   font-size: 20px;
   font-weight: 700;
@@ -45,6 +57,22 @@ hr {
 
 #chart-holder {
   padding: 15px 0;
+}
+
+#no-data-motiv {
+  display: none;
+  padding: 15px 0;
+}
+
+#ndm-header {
+  font-size: 14px;
+  font-style: italic;
+}
+
+#ndm-quote {
+  padding: 15px 0;
+  font-size: 20px;
+  line-height: 1.4;
 }
 
 .sitetrack-element {
@@ -105,12 +133,13 @@ hr {
 .button:active { text-decoration: none; box-shadow: 0 2px 3px 0px rgba(30, 30, 30, 0.5); }
 
 /* set initial values for pressed on buttons */
-#stats-head, #today-graph {
+#stats-page-button, #today-graph {
   background: rgba(54, 162, 235, 0.2);
 }
 
 #expand-sitetrack-container {
   text-align: center;
+  display: none;
 }
 
 #expand-sp-sitetrack {
@@ -133,5 +162,9 @@ hr {
 }
 
 #expand-sp-sitetrack:hover {
+  background: #eeeeee;
+}
+
+#sp-clear-storage:hover {
   background: #eeeeee;
 }

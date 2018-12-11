@@ -4,38 +4,58 @@
 <head>
   <!-- Head basic rules -->
   <meta charset=utf-8 />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
   <title>Timely</title>
-  <link rel="stylesheet" href="main.css">
+  <link rel='stylesheet' href='main.css'>
   <!-- JavaScript link to HTML doc -->
-  <script src="chart.min.js"></script>
-  <script src="chart.js"></script>
+  <script src='chart.min.js'></script>
+  <script src='chart.js'></script>
 </head>
 
 <body>
-  <div class="standard-page">
-    <div id="sp-header">Timely</div>
+  <!-- Portion is on every tab (header/title and menu buttons) -->
+  <div id='sp-header'>Timely</div>
+  <hr>
+  <div class='tabs' id='page-tabs'>
+    <input class='tab button' id='stats-page-button' type='button' value='Stats' />
+    <input class='tab button' id='block-page-button' type='button' value='Block Sites' />
+    <input class='tab button' id='settings-page-button' type='button' value='Settings' />
+  </div>
+  <!-- The standard page holds the general statistics for your time tracking -->
+  <div id='stats-page'>
+    <div id='chart-holder'><canvas id='chart' width='10px' height='10px'></canvas></div>
+    <div id='no-data-motiv'>
+      <div id="ndm-header">No data was found, but enjoy this inspirational quote!</div>
+      <div id="ndm-quote">Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time. - Thomas A. Edison</div>
+    </div>
+    <div class='tabs'>
+      <input class='tab button' type='button' id='today-graph' value='Today' />
+      <input class='tab button' type='button' id='yesterday-graph' value='Yesterday' />
+      <input class='tab button' type='button' id='all-time-graph' value='All-time' />
+    </div> 
     <hr>
+    <div id='sp-sitetrack-storage'></div>
+    <div id='sp-sitetrack-storage-e'></div> <!-- Second portion, expanded past 10 sites-->
+    <div id='expand-sitetrack-container'><input type='button' value='▼' id='expand-sp-sitetrack' /></div>
+    
+    <hr>
+    <!-- WILL MOVE TO SETTINGS PAGE-->
+    <input class='button btn-lightBlue' type='button' value='Clear Storage' id='sp-clear-storage' />
   </div>
-  <div class="tabs" id="head-tabs">
-    <input class="tab button" id="stats-head" type="button" value="Stats" />
-    <input class="tab button" id="block-head" type="button" value="Block Sites" />
-    <input class="tab button" id="settings-head" type="button" value="Settings" />
+  <!-- The block page holds the settings to whitelist and/or block different sites -->
+  <div id='block-page'>
+
+      Block page
+      
   </div>
-  <div id="chart-holder"><canvas id="chart" width="10px" height="10px"></canvas></div>
-  <div class="tabs">
-    <input class="tab button" type="button" id="today-graph" value="Today" />
-    <input class="tab button" type="button" id="yesterday-graph" value="Yesterday" />
-    <input class="tab button" type="button" id="all-time-graph" value="All-time" />
-  </div> 
-  <hr>
-  <div id="sp-sitetrack-storage"></div>
-  <div id="sp-sitetrack-storage-e"></div> <!-- Second portion, expanded past 10 sites-->
-  <div id="expand-sitetrack-container"><input type="button" value="▼" id="expand-sp-sitetrack" /></div>
+  <!-- The settings page holds the settings for graph viewing, some block preferences, and more -->
+  <div id='settings-page'>
+
+
+    Settings page
+  </div>
   
-  <hr>
-  <input class="button btn-lightBlue" type="button" value="Clear Storage" id="sp-clear-storage" />
-  <script src="popup.js"></script> <!-- Need to load after in order for event listeners to function properly -->
+  <script src='popup.js'></script> <!-- Need to load after in order for event listeners to function properly -->
 </body>
 
 </html>

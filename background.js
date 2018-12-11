@@ -2,18 +2,11 @@ var intervalSecondsCount;
 
 function update_timing() {
     
-    chrome.tabs.query({"active": true, "currentWindow": true }, function (tabs) {
+    chrome.tabs.query({'active': true, 'currentWindow': true }, function (tabs) {
 
         // GET BASE URL
 
         var base_url = (new URL(tabs[0].url)).hostname; // stores URL hostname in base_url
-
-        // Remove early components only if the domain is 'normal'
-        if (base_url.includes(".")) {
-            base_url = base_url.split("."); // Splits components based on '.' location
-            var shortened_base_url = [base_url[base_url.length - 2], base_url[base_url.length - 1]]; // gets last two array values
-            base_url = shortened_base_url.join("."); // re-joins base_url with '.'
-        }
 
         // COUNT TIME ON SITE, AGGREGATE AND DAY
 
