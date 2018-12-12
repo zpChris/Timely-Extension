@@ -25,8 +25,11 @@
   <div id='stats-page'>
     <div id='chart-holder'><canvas id='chart' width='10px' height='10px'></canvas></div>
     <div id='no-data-motiv'>
-      <div id="ndm-header">No data was found, but enjoy this inspirational quote!</div>
-      <div id="ndm-quote">Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time. - Thomas A. Edison</div>
+      <div id="ndm-header">No data was found, but enjoy this random quote!</div>
+      <div id="ndm-quote-container">
+        <div id="ndm-quote-text"></div>
+        <div id="ndm-quote-author"></div>
+      </div>
     </div>
     <div class='tabs'>
       <input class='tab button' type='button' id='today-graph' value='Today' />
@@ -44,9 +47,18 @@
   </div>
   <!-- The block page holds the settings to whitelist and/or block different sites -->
   <div id='block-page'>
-
-      Block page
-      
+    <div id='block-input'>
+      <input id='block-input-bar' type='text' placeholder='Input URL Here' />
+      <input class='submit-button' type='button' id='block-input-submit' value='SUBMIT →' />
+      <div id="tooltip">ℹ
+        <span id="tooltiptext">
+            Do not include 'https://', or any following slashes. 
+            Enter the full base url (<i>docs.google.com</i> or <i>www.google.com</i>, for example).
+        </span>
+      </div>
+    </div>
+    <div id='block-input-notification'></div>
+    
   </div>
   <!-- The settings page holds the settings for graph viewing, some block preferences, and more -->
   <div id='settings-page'>
