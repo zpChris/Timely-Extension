@@ -5,7 +5,6 @@ var graph_pressed = 'today-graph'; // current graph button pressed
 var userinput_datakey = now.toDateString(); // User input from button, defaults to today
 var currentPage = document.getElementById('stats-page');
 var chart; // chart defined above in order to allow updates
-var block_list = [];
 
 // Update popup when activated
 window.onload = function () {
@@ -29,9 +28,13 @@ function update_page() {
 }
 
 function update_block_page() {
-    // var block_input_submit = document.getElementById('block-input-submit');
+    
+    // procedurally add all blocked sites to html
+    chrome.storage.local.get(null, function(items) {
 
-    // = document.getElementById('block-input-bar').value;
+        // var block_list[] = 
+
+    });
 
 }
 
@@ -332,9 +335,24 @@ block_input_submit.addEventListener('click', function() {
     if (pattern.test(block_input) && block_input.includes('.')) {
         parser.href = "http://" + block_input;
         document.getElementById('block-input-bar').style.borderBottomColor = '#aaaaaa';
-        block_list[block_list.length] = parser.hostname;
-        document.getElementById('block-input-notification').innerHTML = "<b>" + parser.hostname + "</b> has been successfully added!";
-        document.getElementById('block-input-bar').style.borderBottomColor = 'green';
+        // get array of all blocked websites
+        chrome.storage.local.get({blocked: []}, function (result) {
+            var block_list = result.blocked;
+            if (!block_list.includes(parser.hostname)) {
+                block_list.push(parser.hostname);
+                // blocked website is succesfully added notificaiton
+                document.getElementById('block-input-notification').innerHTML = "<b>" + parser.hostname + "</b> has been successfully added!";
+                document.getElementById('block-input-bar').style.borderBottomColor = 'green';
+                chrome.storage.local.set({blocked: block_list});
+            } else {
+                // notification that blocked website is already included
+                document.getElementById('block-input-notification').innerHTML = "<b>" + parser.hostname + "</b> is already added!";
+                document.getElementById('block-input-bar').style.borderBottomColor = 'orange';
+            }
+            alert(block_list);
+            
+        });
+
     } else if (block_input != '') {
         // Turn bar red to show invalid URL
         document.getElementById('block-input-bar').style.borderBottomColor = 'rgb(255,99,132)';

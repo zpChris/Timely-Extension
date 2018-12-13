@@ -11,9 +11,14 @@ body {
 }
 
 a {
-  text-decoration: none;
   color: black;
-  border-bottom: 0.5px dashed black;
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
 }
 
 hr {
@@ -201,13 +206,20 @@ hr {
   margin: 10px 0;
 }
 
+#block-input-header {
+  display: block;
+  padding: 10px 5px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
 #block-input {
   padding: 5px 5px;
   display: flex;
   justify-content: space-between;
 }
 
-/* COOL INPUT THING BELOW */
+/* COOL INPUT THING BELOW, BLOCK PAGE */
 
 #block-input-bar {
   display: inline-block;
@@ -257,6 +269,47 @@ hr {
   line-height: 1.3;
 }
 
+#blocked-sites-container {
+  margin-right: 50px;
+  padding: 5px 10px;
+}
+
+#block-sites-item {
+  display: flex;
+  justify-content: space-between;
+  background: #f9f9f9;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,0.225);
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 10px 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#block-sites-item-url {
+  margin-top: 1px; /* hard-coded to fix misalignment */
+}
+
+#block-sites-item-cancel {
+  display: inline-block;
+  padding: 2px 2px;
+  cursor: pointer;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 12.8px;
+  width: 16px;
+  height: 16px;
+  color: white;
+  background: rgb(255, 99, 132);
+
+}
+
+#block-sites-item:hover {
+  box-shadow: 0 2px 3px 0px rgba(30, 30, 30, 0.5);
+}
+
+#test {
+}
 
 
 

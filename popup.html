@@ -47,6 +47,7 @@
   </div>
   <!-- The block page holds the settings to whitelist and/or block different sites -->
   <div id='block-page'>
+    <div id='block-input-header'>Block Sites</div>
     <div id='block-input'>
       <input id='block-input-bar' type='text' placeholder='Input URL Here' />
       <input class='submit-button' type='button' id='block-input-submit' value='SUBMIT →' />
@@ -58,7 +59,13 @@
       </div>
     </div>
     <div id='block-input-notification'></div>
-    
+    <div id='blocked-sites-container'>
+      <ul id='block-sites-list'>
+        <li id='block-sites-item'><a id='block-sites-item-url' href='https://google.com'>google.com</a><div id='block-sites-item-cancel'>𝗫</div></li>
+        <li id='block-sites-item'><a href='https://test.com'>test.com</a><div id='block-sites-item-cancel'>𝗫</div></li>
+        <li id='block-sites-item'><a href='https://example.com'>example.com</a><div id='block-sites-item-cancel'>𝗫</div></li>
+      </ul>
+    </div>
   </div>
   <!-- The settings page holds the settings for graph viewing, some block preferences, and more -->
   <div id='settings-page'>
